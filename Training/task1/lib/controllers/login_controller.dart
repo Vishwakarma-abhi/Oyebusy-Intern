@@ -51,7 +51,7 @@ class LoginController extends GetxController {
 
       if (userCredential.user != null) {
         isLoading.value = false;
-        Get.to(HomeScreen());
+        Get.to(homeScreen());
       }
     } on Exception catch (e) {
       Get.snackbar("otp info ", "otp code is not corrrect !!");
