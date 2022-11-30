@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:phone_auth_firebase_last/controllers/login_controller.dart';
-import 'package:phone_auth_firebase_last/views/otp_screen.dart';
+import 'hoem_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  final phone = TextEditingController();
-  final LoginController loginController = Get.find();
+class ProfileView extends StatelessWidget {
+  final name = TextEditingController();
+  final age = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new AppBar(
-          title: Text('Login Screen'),
+          title: Text('Profile Screen'),
         ),
-        body: loginController.isLoading(false) ? Center(child: CircularProgressIndicator()) : ListView(children: [
+        body: ListView(children: [
           new Column(
             children: [
               Form(
@@ -22,12 +23,25 @@ class LoginScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 10.0),
-                            child: TextFormField(
-                              controller: phone,
-                              keyboardType: TextInputType.phone,
-                              decoration:
-                              InputDecoration(labelText: 'Phone Number'),
-                            ),
+                            child:Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextFormField(
+                                  controller: name,
+                                  keyboardType: TextInputType.name,
+                                  decoration:
+                                  InputDecoration(labelText: 'user name'),
+                                ),
+
+                                TextFormField(
+                                  controller: age,
+                                  keyboardType: TextInputType.text,
+                                  decoration:
+                                  InputDecoration(labelText: 'user age'),
+                                ),
+                              ],
+                            )
                           )),
                       Container(
                           margin: EdgeInsets.only(top: 40, bottom: 5),
@@ -35,9 +49,10 @@ class LoginScreen extends StatelessWidget {
                               padding:
                               const EdgeInsets.symmetric(horizontal: 10.0),
                               child: ElevatedButton(
-                                onPressed: () async {
-                                  loginController.verifyPhone(phone.text);
-                                 Get.to(OtpScreen());
+                                onPressed: ()  {
+
+
+
                                 },
                                 child: Container(
                                     padding: const EdgeInsets.symmetric(
@@ -50,13 +65,13 @@ class LoginScreen extends StatelessWidget {
                                       children: <Widget>[
                                         Expanded(
                                             child: Text(
-                                              "Sign In",
+                                              "update",
                                               textAlign: TextAlign.center,
                                             )),
                                       ],
                                     )),
                               )
-                                 )),
+                          )),
                     ],
                   ))
             ],

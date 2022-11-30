@@ -1,27 +1,20 @@
-import 'dart:html';
-
-import 'package:flutter/material.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-
-import 'package:task1/views/home_screen.dart';
+import 'package:phone_auth_firebase_last/views/hoem_screen.dart';
 
 class LoginController extends GetxController {
+
   var isLoading = false.obs;
   var verId = '';
-
   var authStatus = ''.obs;
 
   var auth = FirebaseAuth.instance;
 
-  //through this function we will be verifying the function
   verifyPhone(String phone) async {
     isLoading.value = true;
-
     await auth.verifyPhoneNumber(
-        phoneNumber: phone,
         timeout: Duration(seconds: 50),
+        phoneNumber: phone,
         verificationCompleted: (AuthCredential authCredential) {
           if (auth.currentUser != null) {
             isLoading.value = false;
@@ -29,9 +22,9 @@ class LoginController extends GetxController {
           }
         },
         verificationFailed: (authException) {
-          Get.snackbar("sms code info", "otp code has not been sent");
+          Get.snackbar("sms code info", "otp code hasn't been sent!!");
         },
-        codeSent: (String id, [int? forceResent]) {
+        codeSent: (String id, [int forceResent]) {
           isLoading.value = false;
           this.verId = id;
           authStatus.value = "login successfully";
@@ -41,20 +34,20 @@ class LoginController extends GetxController {
         });
   }
 
+
+  /////////
   otpVerify(String otp) async {
     isLoading.value = true;
-
     try {
       UserCredential userCredential = await auth.signInWithCredential(
-          PhoneAuthProvider.credential(
-              verificationId: this.verId, smsCode: otp));
-
+          PhoneAuthProvider.credential(verificationId: this.verId, smsCode: otp)
+      );
       if (userCredential.user != null) {
         isLoading.value = false;
-        Get.to(homeScreen());
+       Get.to(HomeScreen());
       }
     } on Exception catch (e) {
-      Get.snackbar("otp info ", "otp code is not corrrect !!");
+      Get.snackbar("otp info", "otp code is not correct !!");
     }
   }
 }
